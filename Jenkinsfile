@@ -9,7 +9,6 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
-                sh 'cd ./target && ls -lrth'
             }
         }
         stage('Test') { 
@@ -19,7 +18,7 @@ pipeline {
             post {
                 always {
                     junit 'target/surefire-reports/*.xml'
-                    
+                    archiveArtifacts artifacts: 'target/*.jar'
                 }
             }
         }
